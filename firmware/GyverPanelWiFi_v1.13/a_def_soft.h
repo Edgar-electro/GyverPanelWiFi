@@ -26,34 +26,30 @@
 #define DEFAULT_IP {192, 168, 0, 100}     // Сетевой адрес устройства по умолчанию
 #endif
 
-#ifndef DEFAULT_PORT
-#define DEFAULT_PORT 2390                 // Сетевой порт устройства по умолчанию
-#endif
-
 #ifndef GTW
 #define GTW     1                         // Последняя цифра в IP адресе роутера. Обычно IP роутера 192.168.0.*1*, но некоторые роутеры имеют адрес 192.168.0.100 или 192.168.0.254
 #endif                                    // Тогда здесь вместо *1* должно быть 100 или 254 соответственно
 
 // ------------------------ Сервер времени ---------------------
 
-#define DEFAULT_NTP_SERVER "ru.pool.ntp.org"     // NTP сервер по умолчанию "time.nist.gov"
+#define DEFAULT_NTP_SERVER "2.fr.pool.ntp.org"     // NTP сервер по умолчанию "time.nist.gov"
 #define DEFAULT_AP_NAME    "PanelAP"             // Имя точки доступа по умолчанию 
-#define DEFAULT_AP_PASS    "12341234"            // Пароль точки доступа по умолчанию
+#define DEFAULT_AP_PASS    "12345678"            // Пароль точки доступа по умолчанию
 
 // ------------------------ MQTT parameters --------------------
 
 #if (USE_MQTT == 1)
 
 #ifndef DEFAULT_MQTT_SERVER
-#define DEFAULT_MQTT_SERVER "mqtt.by"            // MQTT сервер
+#define DEFAULT_MQTT_SERVER "mqtt.dealgate.ru"            // MQTT сервер
 #endif
 
 #ifndef DEFAULT_MQTT_USER
-#define DEFAULT_MQTT_USER   ""                   // Имя mqtt-пользователя    (!!! укажите имя пользователя для вашего соединения - зарегистрируйтесь на mqtt.by -> смотрите в личном кабинете !!!)
+#define DEFAULT_MQTT_USER   "edgarik"                   // Имя mqtt-пользователя    (!!! укажите имя пользователя для вашего соединения - зарегистрируйтесь на mqtt.by -> смотрите в личном кабинете !!!)
 #endif
 
 #ifndef DEFAULT_MQTT_PASS
-#define DEFAULT_MQTT_PASS   ""                   // Пароль mqtt-пользователя (!!! укажите пароль вашего соединения - зарегистрируйтесь на mqtt.by -> смотрите в личном кабинете !!!)
+#define DEFAULT_MQTT_PASS   "Edgar777"                   // Пароль mqtt-пользователя (!!! укажите пароль вашего соединения - зарегистрируйтесь на mqtt.by -> смотрите в личном кабинете !!!)
 #endif
 
 #ifndef DEFAULT_MQTT_PORT
@@ -61,7 +57,7 @@
 #endif
 
 #ifndef DEFAULT_MQTT_PREFIX
-#define DEFAULT_MQTT_PREFIX "af7cd12a"           // Префикс топика сообщения уникальный для вашего устройства
+#define DEFAULT_MQTT_PREFIX "aqt6ijki"           // Префикс топика сообщения уникальный для вашего устройства
 #endif
 
 #endif
@@ -75,13 +71,13 @@
 #define COLOR_ORDER    GRB       // Порядок цветов на ленте. Если цвет отображается некорректно - меняйте. Начать можно с RGB
 
 #ifndef BRIGHTNESS
-#define BRIGHTNESS      32       // Яркость матрицы по-умолчанию 0..255
+#define BRIGHTNESS      100       // Яркость матрицы по-умолчанию 0..255
 #endif
 
 // ------------ Настройки региона погоды и часового пояса
 
 #ifndef TIME_ZONE
-#define TIME_ZONE        7           // Смещение часового пояса от UTC
+#define TIME_ZONE        1           // Смещение часового пояса от UTC
 #endif
 
 #ifndef WEATHER_REGION_YDX
@@ -89,7 +85,7 @@
 #endif
 
 #ifndef WEATHER_REGION_OWTH
-#define WEATHER_REGION_OWTH 1502026  // Код региона погоды по OpenWeatherMap
+#define WEATHER_REGION_OWTH 3031359  // Код региона погоды по OpenWeatherMap
 #endif
 
 // Список и порядок эффектов, передаваемый в приложение на смартфоне. Данный список попадает в комбобокс выбора, 
@@ -376,7 +372,7 @@ uint8_t  IP_STA[]   = DEFAULT_IP;           // Статический адрес
 String   ssid       = NETWORK_SSID;         // SSID (имя) вашего роутера (конфигурируется подключением через точку доступа и сохранением в файловой системе микроконтроллера)
 String   pass       = NETWORK_PASS;         // пароль роутера
 
-uint16_t localPort  = DEFAULT_PORT;         // локальный порт на котором слушаются входящие команды управления от приложения на смартфоне, передаваемые через локальную сеть
+uint16_t localPort = 2390;                  // локальный порт на котором слушаются входящие команды управления от приложения на смартфоне, передаваемые через локальную сеть
 
 // ------------------------ MQTT parameters --------------------
 
@@ -476,7 +472,7 @@ WiFiClient w_client;                        // Объект для работы 
 bool     init_weather = false;              // Флаг: true - погода получена; false - погода не получена / не актуальна
 
 #if (USE_WEATHER == 1)
-uint8_t  useWeather = 1;                    // Использовать получение текущей погоды с погодного сервера 0 - не использовать; 1 - Yandex; 2 - OpenWeatherMap
+uint8_t  useWeather = 2;                    // Использовать получение текущей погоды с погодного сервера 0 - не использовать; 1 - Yandex; 2 - OpenWeatherMap
 uint32_t regionID = WEATHER_REGION_YDX;     // Код региона по Yandex
 uint32_t regionID2 = WEATHER_REGION_OWTH;   // Код региона по OpenWeatherMap
 String   skyColor;                          // Рекомендованный цвет фона погоды
@@ -499,7 +495,7 @@ bool     weather_ok = true;                 // Погода получена
 // API-идентификатор сервиса получения погоды - смотрите раздел Wiki - Настройка получения информации о погоде
 // https://github.com/vvip-68/GyverPanelWiFi/wiki/Настройка-получения-информации-о-погоде
 #ifndef  WEATHER_API_KEY
-#define  WEATHER_API_KEY "6a4ba421859c9f4166697758b68d889b"
+#define  WEATHER_API_KEY "c47ffcd0bfbe15afddf065ca5a5cb805"
 #endif
 #endif
 
